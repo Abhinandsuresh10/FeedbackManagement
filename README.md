@@ -30,8 +30,8 @@ The Feedback Management System is a web application designed to manage user feed
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/feedback-management-system.git
-    cd feedback-management-system
+    git clone https://github.com/Abhinandsuresh10/FeedbackManagement.git
+    cd FEEDBACK
     ```
 
 2. Install dependencies:

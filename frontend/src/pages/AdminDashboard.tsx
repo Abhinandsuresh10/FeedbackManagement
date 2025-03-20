@@ -6,7 +6,8 @@ import 'react-resizable/css/styles.css';
 import { useUserStore } from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 import { useAllUsersQuery } from '../api/getAllusers';
-import AdminCard from '../components/adminCard';
+import AdminCard from '../components/AdminCard';
+import { useAnalytics } from '../api/getAnalytics';
 
 
 const ItemType = {
@@ -37,15 +38,18 @@ const AdminDashboard: React.FC = () => {
     navigate('/login');
   };
   const [adminName, setAdminName] = useState('');
-  const { data: users, isLoading: isUsersLoading, error: usersError } = useAllUsersQuery();
+  const { data: users } = useAllUsersQuery();
   const [activeUsers, setActiveUsers] = useState<string[]>([]);
   const [totalFeedbacks, setTotalFeedbacks] = useState<number>(0);
+  const {data} = useAnalytics();
   
   useEffect(() => { 
     setAdminName(useUserStore.getState().user?.name || '');
-    setActiveUsers(users?.sort((a, b) => b.message.length - a.message.length).map((user) => user.userName).slice(0, 3) || []);
-    setTotalFeedbacks(users?.reduce((acc, user) => acc + user.message.length, 0) || 0);
-   },[users])
+    if(data) {
+      setActiveUsers(data.users);
+      setTotalFeedbacks(data?.totalMessages);
+    }
+  },[users, data])
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -91,7 +95,7 @@ const AdminDashboard: React.FC = () => {
               <span className="text-small sm:hidden">{adminName || ''}</span>
             </div>
           </header>
-          <main>
+          <main >
             {view === 'list' && (
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-4">Users</h2>
@@ -104,18 +108,18 @@ const AdminDashboard: React.FC = () => {
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-4">Analytics Dashboard</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <ResizableBox width={300} height={200} minConstraints={[200, 100]} maxConstraints={[600, 400]}>
+                  <ResizableBox width={260} height={100} minConstraints={[200, 100]} maxConstraints={[600, 400]}>
                     <DraggableWidget id="total-feedbacks">
                       <h3 className="text-lg font-bold">Total Feedbacks Submitted</h3>
-                      <p className="text-2xl">{totalFeedbacks}</p>
+                      <p className="text-small ml-28">{totalFeedbacks}</p>
                     </DraggableWidget>
                   </ResizableBox>
-                  <ResizableBox width={300} height={200} minConstraints={[200, 100]} maxConstraints={[600, 400]}>
+                  <ResizableBox width={200} height={200} minConstraints={[200, 100]} maxConstraints={[600, 400]}>
                     <DraggableWidget id="top-users">
-                      <h3 className="text-lg font-bold">Top 3 Active Users</h3>
+                      <h3 className="text-lg font-bold">Top Active Users</h3>
                       <ul>
                         {activeUsers.map((user, index) => (
-                          <li key={index} className="text-small">{user}</li>
+                          <li key={index} className="text-small ml-18">{user}</li>
                         ))}
                       </ul>
                     </DraggableWidget>

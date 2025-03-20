@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {registerSchema} from '../schema/zod.schema';
 import { ZodError } from 'zod';
 import { useRegister } from "../api/ResiterApi";;
@@ -9,14 +9,19 @@ const Register: React.FC = () => {
   const [error, setError] = useState({ nameError: '', emailError: '', passwordError: '', roleError: '' });
 
   const { mutate: registerUser, isLoading, error: apiError } = useRegister();
-
+  const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError({ nameError: '', emailError: '', passwordError: '', roleError: '' }); // ✅ Reset errors
   
     try {
       registerSchema.parse(formData);
-      registerUser(formData)
+      registerUser(formData, {
+        onSuccess: () => {
+         navigate('/login')
+        }
+      });
+      
     } catch (err) {
       if (err instanceof ZodError) {
         const errors: Record<string, string> = {};

@@ -11,7 +11,7 @@ interface Feedback {
 }
 
 const fetchFeedback = async (): Promise<Feedback[]> => {
-  const response = await axios.get(`${API_URL}/Getfeedbacks`, {
+  const response = await axios.get(`${API_URL}/getFeedbacks`, {
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${useUserStore.getState().accessToken}`,

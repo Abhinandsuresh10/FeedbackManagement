@@ -6,4 +6,5 @@ export interface IUsercontroller {
     login(req:Request, res:Response, next:NextFunction):void;
     feedback(req:Request, res:Response, next:NextFunction):void;
     getFeedbacks(req:Request, res:Response, next:NextFunction):void;
+    getAnalytics(req:Request, res:Response, next:NextFunction):void;
 }

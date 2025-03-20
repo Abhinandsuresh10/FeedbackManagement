@@ -236,6 +236,8 @@ userRouter.get('/getFeedbacks',verifyJWT, controller.getFeedbacks);
  */
 userRouter.get('/getUsers',verifyJWT, controller.getAllusers);
 
+userRouter.get('/getAnalytics',verifyJWT, controller.getAnalytics);
+
 
 
 export default userRouter;

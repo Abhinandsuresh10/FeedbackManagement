@@ -7,13 +7,15 @@ import { useLogin } from "../api/LoginApi";
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState({ emailError: '', passwordError: '' });
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  const { mutate, isPending, error: apiError } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError({ emailError: '', passwordError: '' });
+    setApiError(null);
 
     try {
       LoginSchema.parse(formData);
@@ -21,13 +23,15 @@ const Login: React.FC = () => {
       mutate(formData, {
         onSuccess: (data) => {
           const userRole = data.user?.role; 
-          console.log(data)
           if (userRole === "admin") {
             navigate("/admin-dashboard");
           } else {
             navigate("/user-dashboard");
           }
         },
+        onError: (error) => {
+          setApiError("Invalid email or password");
+        }
       });
       
     } catch (err) {
@@ -59,7 +63,6 @@ const Login: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500"
-              
             />
             <small className="text-red-500">{error.emailError}</small>
           </div>
@@ -71,7 +74,6 @@ const Login: React.FC = () => {
               value={formData.password}
               onChange={handleChange}
               className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500"
-              
             />
             <small className="text-red-500">{error.passwordError}</small>
           </div>

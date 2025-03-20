@@ -8,4 +8,6 @@ export interface IRepository  {
     getFeedbacks(userId:string):Promise<IFeedback|null>
     getAllUsers():Promise<IUser[]>
     getAllFeedbacks():Promise<IFeedback[]>
+    getTotalMessages():Promise<number>
+    getUsersWithFeedbackCount():Promise<string[]>
 }

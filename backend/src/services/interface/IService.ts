@@ -7,4 +7,5 @@ export interface IService {
     feedback(userId: string, message: string): Promise<void>;
     getFeedbacks(userId: string): Promise<IFeedback | null>;
     getAllUsers(): Promise<{ userId: number, userName: string, message: string[] }[]>;
+    getAnalytics(): Promise<{ totalMessages: number, users: string[] }>;
 }

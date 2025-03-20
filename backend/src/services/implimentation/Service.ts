@@ -46,7 +46,6 @@ export class service implements IService {
       async getFeedbacks(userId: string): Promise<IFeedback | null> {
         try {
           const feedbacks = await this.baseRepository.getFeedbacks(userId);
-
           return feedbacks 
         }
         catch (error) {
@@ -82,6 +81,18 @@ export class service implements IService {
             throw error;
         }
     }
+
+    getAnalytics = async (): Promise<{ totalMessages: number, users: string[] }> => {
+        try {
+            const totalMessages = await this.baseRepository.getTotalMessages();
+            const users = await this.baseRepository.getUsersWithFeedbackCount();
+            return { totalMessages, users };
+        } catch (error) {
+            console.error("Error getting analytics:", error);
+            throw error;
+        }
+    }
+
   }
     
 

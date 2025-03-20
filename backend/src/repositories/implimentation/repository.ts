@@ -78,4 +78,43 @@ export class Repository implements IRepository {
         throw new Error("Error getting feedbacks");
       }
   }
+
+  getTotalMessages = async (): Promise<number> => {
+      try {
+        const feedbacks = await Feedback.find();
+        let totalMessages = 0;
+        feedbacks.forEach(feedback => {
+            totalMessages += feedback.message.length;
+        });
+        return totalMessages;
+      } catch (error) {
+          console.error("Error getting total messages:", error);
+          throw new Error("Error getting total messages");
+      }
+  }
+
+  getUsersWithFeedbackCount = async (): Promise<string[]> => {
+    try {
+        const feedbacks = await Feedback.aggregate([
+            { $unwind: "$message" },
+            { $group: { _id: "$userId", count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $limit: 3 }
+        ]);
+
+        const userIds = feedbacks.map(fb => fb._id);
+        const users = await prisma.user.findMany({
+            where: { 
+                id: { in: userIds },
+                role: { not: 'admin' } 
+            },
+            select: { name: true } 
+        });
+
+        return users.map(user => user.name);
+    } catch (error) {
+        console.error("Error getting analytics:", error);
+        throw new Error("Error getting analytics");
+    }
+  }
 }

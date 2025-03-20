@@ -105,7 +105,8 @@ The API documentation is available at `/api-docs` when the server is running. It
 - **Request Body**:
     ```json
     {
-        "feedback": "I love this platform! It's very user-friendly."
+        "userId": 2,
+        "message": "I love this platform! It's very user-friendly."
     }
     ```
 - **Responses**:

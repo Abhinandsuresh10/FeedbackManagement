@@ -91,4 +91,19 @@ export class Controller {
       res.status(500).json({ message: 'Internal server error' });
     }
   }
+
+  getAnalytics = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+
+    
+      if(!req.user) {
+        throw new Error('User not found');
+      }
+      const analytics = await this.service.getAnalytics();
+      res.status(200).json(analytics);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
 }

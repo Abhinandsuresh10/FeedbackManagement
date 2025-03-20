@@ -5,14 +5,14 @@ import { AuthRequest, JwtPayload } from '../types/jwt.types';
 
 export const verifyJWT = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-        console.log("check headers and body:", req.headers, req.body);
+        // console.log("check headers and body:", req.headers, req.body);
 
         const authHeader = req.headers.authorization;
         const accessToken = authHeader && authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : undefined;
         const refreshToken = req.cookies?.refreshtoken || req.headers.cookie?.split('refreshtoken=')[1]?.split(';')[0];
 
-        console.log("Access Token:", accessToken);
-        console.log("Refresh Token:", refreshToken);
+        // console.log("Access Token:", accessToken);
+        // console.log("Refresh Token:", refreshToken);
 
         if (!accessToken || !refreshToken) {
             res.status(HttpStatus.UNAUTHORIZED).json({
@@ -41,7 +41,7 @@ export const verifyJWT = async (req: AuthRequest, res: Response, next: NextFunct
         }
 
         const newAccessToken = generateAccessToken({ id: decodedRefresh.id, email: decodedRefresh.email });
-        console.log("New Access Token:", newAccessToken);
+        // console.log("New Access Token:", newAccessToken);
 
         res.setHeader('Authorization', `Bearer ${newAccessToken}`);
         req.user = decodedRefresh;

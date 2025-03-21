@@ -5,6 +5,7 @@ import { useFeedback } from '../api/feedbackApi';
 import { useFeedbackQuery } from '../api/getFeedback';
 import Card from '../components/Card';
 import ErrorBoundary from '../components/ErrorBoundary';
+import Button from '../components/Button';
 
 const UserDashboard: React.FC = () => {
   const [username, setUserName] = useState('');
@@ -49,8 +50,11 @@ const UserDashboard: React.FC = () => {
   };
   
   const handleLogout = () => {
-    logout();
-    navigate('/login');
+    const permission = window.confirm('are you sure logout');
+    if(permission) {
+      logout();
+      navigate('/login');
+    }
   };
 
   return (
@@ -112,13 +116,7 @@ const UserDashboard: React.FC = () => {
                     {apiError && <small className="text-red-500">{apiError.message}</small>}
                   </div>
                   <div>
-                    <button
-                      type="submit"
-                      className="px-4 py-2 font-bold text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? 'Submitting...' : 'Submit'}
-                    </button>
+                  <Button text="Submit" type="submit" isLoading={isLoading} />
                   </div>
                 </form>
               </div>

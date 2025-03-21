@@ -34,8 +34,11 @@ const AdminDashboard: React.FC = () => {
   const logout = useUserStore((state) => state.logout);
 
   const handleLogout = () => {
-    logout();
-    navigate('/login');
+    const permission = window.confirm('are you sure logout');
+    if(permission) {
+      logout();
+      navigate('/login');
+    }
   };
   const [adminName, setAdminName] = useState('');
   const { data: users } = useAllUsersQuery();
@@ -110,13 +113,13 @@ const AdminDashboard: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <ResizableBox width={260} height={100} minConstraints={[200, 100]} maxConstraints={[600, 400]}>
                     <DraggableWidget id="total-feedbacks">
-                      <h3 className="text-lg font-bold">Total Feedbacks Submitted</h3>
+                      <h3 className="text-lg font-semibold">Total Feedbacks Submitted</h3>
                       <p className="text-small ml-28">{totalFeedbacks}</p>
                     </DraggableWidget>
                   </ResizableBox>
                   <ResizableBox width={200} height={200} minConstraints={[200, 100]} maxConstraints={[600, 400]}>
                     <DraggableWidget id="top-users">
-                      <h3 className="text-lg font-bold">Top Active Users</h3>
+                      <h3 className="text-lg font-semibold">Top Active Users</h3>
                       <ul>
                         {activeUsers.map((user, index) => (
                           <li key={index} className="text-small ml-18">{user}</li>

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon --ext ts --exec ts-node src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -42,9 +43,10 @@
     "@types/node": "^22.13.10",
     "@types/supertest": "^6.0.2",
     "jsdom": "^26.0.0",
+    "msw": "^2.7.3",
     "nodemon": "^3.1.9",
     "prisma": "^6.5.0",
-    "supertest": "^7.0.0",
+    "supertest": "^7.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
     "vitest": "^3.0.9"

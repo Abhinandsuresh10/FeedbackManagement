@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LoginSchema } from '../schema/zod.schema';
 import { ZodError } from 'zod';
 import { useLogin } from "../api/LoginApi";
+import Button from '../components/Button';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -80,12 +81,7 @@ const Login: React.FC = () => {
           {apiError && <p className="text-red-500">{apiError}</p>}
           <h1>Don't have an account? <Link to='/' className='text-blue-500'>Register</Link></h1>
           <div>
-            <button
-              type="submit"
-              className="w-full px-4 py-2 font-bold text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-            >
-              Login
-            </button>
+          <Button text="Login" type="submit" fullWidth />
           </div>
         </form>
       </div>

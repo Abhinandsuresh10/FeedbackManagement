@@ -25,6 +25,7 @@ The Feedback Management System is a web application designed to manage user feed
 - React Query (for api calls)
 - Swagger (for API documentation)
 - JWT (for authentication)
+- vitest (for test)
 
 ## Installation
 
@@ -137,5 +138,12 @@ The API documentation is available at `/api-docs` when the server is running. It
     - `401`: Unauthorized
     - `500`: Internal server error
 
-
+- **URL**: `/api/getAnalytics`
+- **Method**: `GET`
+- **Description**: Retrieve the total feedback from the mongodb and return the most feeback added users name after aggregate.
+- **Security**: Bearer token required
+- **Responses**:
+    - `200`: Successfully retrieved totalfeedback and three most feedback added users
+    - `401`: Unauthorized
+    - `500`: Internal server error
 

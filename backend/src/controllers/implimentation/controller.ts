@@ -95,7 +95,6 @@ export class Controller {
   getAnalytics = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
 
-    
       if(!req.user) {
         throw new Error('User not found');
       }

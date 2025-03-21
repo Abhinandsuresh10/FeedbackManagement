@@ -45,7 +45,9 @@ The Feedback Management System is a web application designed to manage user feed
     ```env
     DATABASE_URL=your_postgresql_database_url
     MONGODB_URI=your_mongodb_uri
-    JWT_SECRET=your_jwt_secret
+    PORT=your_port
+    JWT_ACCESS_SECRET=your_access_token
+    JWT_REFRESH_SECRET=your_refresh-token
     ```
 
 4. Run the application:
